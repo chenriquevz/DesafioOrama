@@ -9,12 +9,31 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.challengeorama.orama.ui.main.MainFragment"
-        tools:layout="@layout/main_fragment"/>
+        tools:layout="@layout/main_fragment"
+        android:label="@string/app_name">
+
+        <action
+            android:id="@+id/action_main_to_listScreen"
+            app:destination="@id/ListScreen">
+            <argument
+                android:name="fundoID"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+
+    </fragment>
 
     <fragment
         android:id="@+id/ListScreen"
         android:name="com.challengeorama.orama.ui.detail.DetailFragment"
-        tools:layout="@layout/detail_fragment"/>
+        tools:layout="@layout/detail_fragment">
+
+        <argument
+            android:name="fundoID"
+            app:argType="integer"
+            app:nullable="false" />
+
+    </fragment>
 
 
 </navigation>

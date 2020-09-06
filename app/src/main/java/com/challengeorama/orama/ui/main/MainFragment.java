@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,44 +61,48 @@ public class MainFragment extends Fragment {
     }
 
 
-
     private void subscribeObservers() {
+
+        MainRecyclerAdapter adapter = new MainRecyclerAdapter();
+        RecyclerView recyclerView = binding.mainFundosRecycler;
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
 
         mViewModel.getFundos().observe(getViewLifecycleOwner(), new Observer<Resource<List<Fundos>>>() {
             @Override
             public void onChanged(Resource<List<Fundos>> fundos) {
                 if (fundos != null) {
-                    if (fundos.data != null) {
-                        switch (fundos.status) {
+                    switch (fundos.status) {
 
-                            case LOADING: {
-                                Log.d("teste", "loading");
-//                            showProgressBar(true);
-                                break;
-                            }
-
-                            case ERROR: {
-                                Log.d("teste", "ERROR");
-//                            showParent();showProgressBar(false);
-//                            setRecipeProperties(recipeResource.data);
-                                break;
-                            }
-
-                            case SUCCESS: {
-                                Log.d("teste", "SUCCESS");
-//                            showParent();
-//                            showProgressBar(false);
-//                            setRecipeProperties(recipeResource.data);
-                                break;
-                            }
+                        case LOADING: {
+                            showProgressBar(true);
+                            break;
                         }
 
+                        case ERROR: {
+                            showProgressBar(false);
+                            break;
+                        }
+
+                        case SUCCESS: {
+                            if (fundos.data != null) {
+                                showProgressBar(false);
+                                adapter.submitList(fundos.data);
+                            }
+
+                            break;
+                        }
                     }
+
 
                 }
             }
         });
 
+    }
+
+    public void showProgressBar(boolean visibility) {
+        binding.mainProgressbar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override

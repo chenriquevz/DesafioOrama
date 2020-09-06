@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity
 public class Fundos {
 
@@ -77,6 +79,29 @@ public class Fundos {
         this.description = description;
         this.profitabilities = profitabilities;
         this.fundManager = fundManager;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Fundos fundos = (Fundos) o;
+        return id == fundos.id &&
+                Objects.equals(fullName, fundos.fullName) &&
+                Objects.equals(simpleName, fundos.simpleName) &&
+                Objects.equals(isClosed, fundos.isClosed) &&
+                Objects.equals(initialDate, fundos.initialDate) &&
+                Objects.equals(fees, fundos.fees) &&
+                Objects.equals(descriptionSeo, fundos.descriptionSeo) &&
+                Objects.equals(operability, fundos.operability) &&
+                Objects.equals(description, fundos.description) &&
+                Objects.equals(profitabilities, fundos.profitabilities) &&
+                Objects.equals(fundManager, fundos.fundManager);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName, simpleName, isClosed, initialDate, fees, descriptionSeo, operability, description, profitabilities, fundManager);
     }
 
     public Fundos() {
