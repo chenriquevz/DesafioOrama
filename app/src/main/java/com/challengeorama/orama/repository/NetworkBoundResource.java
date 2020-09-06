@@ -16,7 +16,6 @@ import com.challengeorama.orama.api.ApiResponse;
 // RequestObject: Type for the API response. (network request)
 public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
-    private static final String TAG = "NetworkBoundResource";
 
     private AppExecutors appExecutors;
     private MediatorLiveData<Resource<CacheObject>> results = new MediatorLiveData<>();
@@ -66,7 +65,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
      */
     private void fetchFromNetwork(final LiveData<CacheObject> dbSource){
 
-        Log.d(TAG, "fetchFromNetwork: called.");
 
         // update LiveData for loading status
         results.addSource(dbSource, new Observer<CacheObject>() {
@@ -92,7 +90,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                  */
 
                 if(requestObjectApiResponse instanceof ApiResponse.ApiSuccessResponse){
-                    Log.d(TAG, "onChanged: ApiSuccessResponse.");
 
                     appExecutors.diskIO().execute(new Runnable() {
                         @Override
@@ -120,7 +117,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     });
                 }
                 else if(requestObjectApiResponse instanceof ApiResponse.ApiEmptyResponse){
-                    Log.d(TAG, "onChanged: ApiEmptyResponse");
                     appExecutors.mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -134,7 +130,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     });
                 }
                 else if(requestObjectApiResponse instanceof ApiResponse.ApiErrorResponse){
-                    Log.d(TAG, "onChanged: ApiErrorResponse.");
                     results.addSource(dbSource, new Observer<CacheObject>() {
                         @Override
                         public void onChanged(@Nullable CacheObject cacheObject) {

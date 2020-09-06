@@ -36,27 +36,6 @@
                 tools:text="Fundo A" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/managerFundo_fundos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Manager A" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="@id/managerFundo_fundos"
-                app:layout_constraintTop_toBottomOf="@id/managerFundo_fundos" />
-
-            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/yearProfitabilities_fundos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

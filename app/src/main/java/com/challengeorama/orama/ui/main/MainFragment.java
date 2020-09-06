@@ -56,7 +56,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this, providerFactory).get(MainViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity(), providerFactory).get(MainViewModel.class);
         subscribeObservers();
     }
 

@@ -44,7 +44,7 @@ public class FundosRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<Fundos> data) {
-                return true;
+                return data == null;
             }
 
             @NonNull
