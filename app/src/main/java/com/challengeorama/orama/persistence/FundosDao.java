@@ -12,12 +12,12 @@ import io.reactivex.Single;
 public interface FundosDao {
 
     @Insert
-    Single<Long> insertFundos(List<Fundos> fundos) throws Exception;
+    void insertFundos(List<Fundos> fundos) throws Exception;
 
-    @Query("SELECT * FROM fundos")
+    @Query("SELECT * FROM Fundos")
     LiveData<List<Fundos>> getFundos();
 
-    @Query("SELECT * FROM fundos WHERE id = :id")
+    @Query("SELECT * FROM Fundos WHERE id = :id")
     LiveData<List<Fundos>> getFundo(int id);
 
 }

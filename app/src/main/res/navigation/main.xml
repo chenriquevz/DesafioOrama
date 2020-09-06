@@ -12,7 +12,7 @@
         tools:layout="@layout/main_fragment"/>
 
     <fragment
-        android:id="@+id/postsScreen"
+        android:id="@+id/ListScreen"
         android:name="com.challengeorama.orama.ui.detail.DetailFragment"
         tools:layout="@layout/detail_fragment"/>
 

@@ -3,6 +3,7 @@ package com.challengeorama.orama.di;
 import android.app.Application;
 
 import com.challengeorama.orama.ui.MainActivity;
+import com.challengeorama.orama.ui.main.MainFragment;
 
 import javax.inject.Singleton;
 
@@ -13,7 +14,8 @@ import dagger.Component;
 @Component(
         modules = {
                 AppModule.class,
-                ViewModelFactoryModule.class
+                ViewModelFactoryModule.class,
+                RepositoryModule.class
         }
 )
 public interface AppComponent {
@@ -21,9 +23,10 @@ public interface AppComponent {
     @Component.Factory
     interface Factory {
 
-        public AppComponent create (@BindsInstance Application application);
+        AppComponent create (@BindsInstance Application application);
 
     }
 
-    public void inject(MainActivity mainActivity);
+    void inject(MainFragment mainFragment);
+    void inject(MainActivity mainActivity);
 }

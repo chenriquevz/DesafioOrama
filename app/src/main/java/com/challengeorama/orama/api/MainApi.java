@@ -1,5 +1,7 @@
 package com.challengeorama.orama.api;
 
+import androidx.lifecycle.LiveData;
+
 import com.challengeorama.orama.model.Fundos;
 import java.util.List;
 import io.reactivex.Flowable;
@@ -7,8 +9,8 @@ import retrofit2.http.GET;
 
 public interface MainApi {
 
-    @GET()
-    Flowable<List<Fundos>> getFundos(
+    @GET("fund_detail_full.json?serializ%20er=fund_detail_full")
+    LiveData<ApiResponse<List<Fundos>>> getFundos(
     );
 
 }
