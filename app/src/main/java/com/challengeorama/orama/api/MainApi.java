@@ -2,9 +2,9 @@ package com.challengeorama.orama.api;
 
 import androidx.lifecycle.LiveData;
 
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.fundos.Fundos;
 import java.util.List;
-import io.reactivex.Flowable;
+
 import retrofit2.http.GET;
 
 public interface MainApi {

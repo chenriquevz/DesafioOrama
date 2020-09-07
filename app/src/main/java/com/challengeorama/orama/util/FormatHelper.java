@@ -1,5 +1,9 @@
 package com.challengeorama.orama.util;
 
+import android.nfc.FormatException;
+
+import androidx.annotation.Nullable;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -9,19 +13,40 @@ import java.util.Locale;
 
 public class FormatHelper {
 
-    public String FloatToReais(Float number) {
+    public String FloatToReais(@Nullable  Float number) {
 
-        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        try {
+            if (number == null) {
+                DecimalFormat formatter = new DecimalFormat("#,###.##");
 
-        return formatter.format(number);
+                return formatter.format(number);
+            } else {
+                return "0";
+            }
+
+        } catch (NullPointerException e) {
+            return "0";
+        }
+
+
 
     }
 
-    public String FloatToPercent(Float number) {
+    public String FloatToPercent(@Nullable Float number) {
 
-        DecimalFormat formatter = new DecimalFormat("#,##0.00");
+        try {
+            if (number == null) {
+                DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
-        return formatter.format(number);
+                return formatter.format(number);
+            } else {
+                return "0,00";
+            }
+        } catch (NullPointerException e) {
+            return "0";
+        }
+
+
 
     }
 

@@ -1,17 +1,14 @@
 package com.challengeorama.orama.ui.main;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.challengeorama.orama.databinding.MainViewholderFundosBinding;
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.fundos.Fundos;
 
 public class MainRecyclerAdapter extends ListAdapter<Fundos, FundosViewHolder> {
     /**

@@ -1,6 +1,5 @@
-package com.challengeorama.orama.model;
+package com.challengeorama.orama.model.fundos;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

@@ -17,15 +17,13 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.databinding.MainFragmentBinding;
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.Resource;
 import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
 

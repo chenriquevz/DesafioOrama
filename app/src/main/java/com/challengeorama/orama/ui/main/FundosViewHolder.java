@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.challengeorama.orama.R;
 import com.challengeorama.orama.databinding.MainViewholderFundosBinding;
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.util.FormatHelper;
 
 public class FundosViewHolder extends RecyclerView.ViewHolder {
@@ -25,14 +25,16 @@ public class FundosViewHolder extends RecyclerView.ViewHolder {
             Resources res = mBinding.getRoot().getContext().getResources();
 
             mBinding.nameFundos.setText(fundos.getSimpleName());
-            mBinding.yearProfitabilitiesFundos.setText(res.getString(R.string.main_rentabilidade_anual,
-                    new FormatHelper().FloatToPercent(fundos.getProfitabilities().getYear())));
             mBinding.feesFundos.setText(res.getString(R.string.main_fees,
                     fundos.getFees().getAdministrationFee()));
             mBinding.minimumInitialApplicationAmountFundos.setText(res.getString(
                     R.string.main_operability_minimumInitialApplicationAmount,
                     new FormatHelper().FloatToReais(fundos.getOperability().getMinimumInitialApplicationAmount())));
 
+/*            if (fundos.getProfitabilities().getYear() != null) {
+                mBinding.yearProfitabilitiesFundos.setText(res.getString(R.string.main_rentabilidade_anual,
+                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getYear())));
+            }*/
 
             mBinding.cardviewFundos.setTransitionName(res.getString(R.string.main_sharedelementTransition,
                     fundos.getId()));

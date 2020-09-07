@@ -22,7 +22,7 @@ import androidx.transition.TransitionInflater;
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.R;
 import com.challengeorama.orama.databinding.DetailFragmentBinding;
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.util.FormatHelper;
 import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
 

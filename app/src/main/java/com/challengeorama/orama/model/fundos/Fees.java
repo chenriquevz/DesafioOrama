@@ -1,4 +1,4 @@
-package com.challengeorama.orama.model;
+package com.challengeorama.orama.model.fundos;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

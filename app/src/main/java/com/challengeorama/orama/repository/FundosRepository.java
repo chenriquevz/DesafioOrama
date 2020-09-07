@@ -1,15 +1,18 @@
 package com.challengeorama.orama.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+
 import com.challengeorama.orama.api.ApiResponse;
 import com.challengeorama.orama.api.MainApi;
-import com.challengeorama.orama.model.Fundos;
+import com.challengeorama.orama.model.FilterOptions;
+import com.challengeorama.orama.model.Sort;
+import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.persistence.FundosDao;
+
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -29,6 +32,36 @@ public class FundosRepository {
 
     public LiveData<Fundos> getFundo(int id) {
         return fundosDao.getFundo(id);
+    }
+
+    public LiveData<List<Fundos>> getFundosSorted(List<FilterOptions> filterOptions) {
+
+        for (FilterOptions item : filterOptions) {
+
+            if (item.getActive()) {
+
+                switch (item.getFilter()) {
+                    case MinimumAmount: {
+                        return fundosDao.getFundosOrderMinimumAmount(item.getSort() == Sort.ASC);
+                    }
+                    case Date: {
+                        return fundosDao.getFundosOrderDate(item.getSort() == Sort.ASC);
+                    }
+                    case profitabilityYear: {
+                        return fundosDao.getFundosOrderProfitability(item.getSort() == Sort.ASC);
+                    }
+                    case Name: {
+                       return fundosDao.getFundosOrderName(item.getSort() == Sort.ASC);
+                    }
+                }
+
+            }
+
+        }
+
+
+        return fundosDao.getFundos();
+
     }
 
     public LiveData<Resource<List<Fundos>>> observeFundos() {
