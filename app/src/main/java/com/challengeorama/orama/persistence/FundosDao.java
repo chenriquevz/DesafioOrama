@@ -18,6 +18,6 @@ public interface FundosDao {
     LiveData<List<Fundos>> getFundos();
 
     @Query("SELECT * FROM Fundos WHERE id = :id")
-    LiveData<List<Fundos>> getFundo(int id);
+    LiveData<Fundos> getFundo(int id);
 
 }

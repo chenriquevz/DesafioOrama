@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Desafio Orama</string>
-    <string name="main_rentabilidade_anual">Rentabilidade anual: %s%%</string>
+    <string name="main_rentabilidade_anual">Rentabilidade último ano: %s%%</string>
+    <string name="main_rentabilidade_mensal">Rentabilidade último mês: %s%%</string>
+    <string name="main_rentabilidade_diaria">Rentabilidade último dia: %s%%</string>
     <string name="main_fees">Taxa administrativa: %1$s</string>
     <string name="main_operability_minimumInitialApplicationAmount">Aplicação mínima: R$%s</string>
+    <string name="main_operability_minimumBalance">Saldo mínimo: R$%s</string>
+
+    <string name="detail_rentabilidade_anual">Ano: %s%%</string>
+    <string name="detail_fundo_initialDate">Desde %s</string>
+    <string name="detail_rentabilidade_mensal">Mês: %s%%</string>
+    <string name="detail_rentabilidade_diaria">Dia: %s%%</string>
+    <string name="detail_rentabilidade_12m">12 meses: %s%%</string>
+    <string name="detail_rentabilidade_24m">24 meses: %s%%</string>
+    <string name="detail_rentabilidade_36m">36 meses: %s%%</string>
+    <string name="detail_rentabilidade_48m">48 meses: %s%%</string>
+    <string name="detail_rentabilidade_60m">60 meses: %s%%</string>
+
 </resources>

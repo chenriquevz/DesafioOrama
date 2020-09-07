@@ -27,7 +27,7 @@ public class FundosRepository {
         this.mainApi = mainApi;
     }
 
-    public LiveData<List<Fundos>> getFundo(int id) {
+    public LiveData<Fundos> getFundo(int id) {
         return fundosDao.getFundo(id);
     }
 

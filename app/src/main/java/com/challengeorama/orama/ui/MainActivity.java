@@ -1,13 +1,17 @@
 package com.challengeorama.orama.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,24 +21,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.R;
 import com.challengeorama.orama.databinding.MainActivityBinding;
-import com.challengeorama.orama.model.Fundos;
-import com.challengeorama.orama.repository.Resource;
-import com.challengeorama.orama.ui.main.MainViewModel;
-import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 
 public class MainActivity extends AppCompatActivity {
 
     MainActivityBinding mBinding;
-
-    private MainViewModel mViewModel;
-
-    @Inject
-    ViewModelProviderFactory providerFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +43,35 @@ public class MainActivity extends AppCompatActivity {
         assert navController != null;
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+
+                switch (destination.getId()) {
+
+                    case R.id.mainFragment: {
+
+                        int color = ContextCompat.getColor(MainActivity.this, R.color.colorPrimary);
+                        ColorDrawable colorDrawable = new ColorDrawable(color);
+
+                        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark));
+                        mBinding.mainActionBar.setBackground(colorDrawable);
+                        break;
+                    }
+                    case R.id.detailFragment: {
+
+                        int color = ContextCompat.getColor(MainActivity.this, R.color.colorAccent);
+                        ColorDrawable colorDrawable = new ColorDrawable(color);
+
+                        getWindow().setStatusBarColor(color);
+                        mBinding.mainActionBar.setBackground(colorDrawable);
+                        break;
+                    }
+                }
+
+            }
+        });
 
 
     }

@@ -3,6 +3,7 @@ package com.challengeorama.orama.di;
 import android.app.Application;
 
 import com.challengeorama.orama.ui.MainActivity;
+import com.challengeorama.orama.ui.detail.DetailFragment;
 import com.challengeorama.orama.ui.main.MainFragment;
 
 import javax.inject.Singleton;
@@ -28,5 +29,6 @@ public interface AppComponent {
     }
 
     void inject(MainFragment mainFragment);
+    void inject(DetailFragment detailFragment);
     void inject(MainActivity mainActivity);
 }

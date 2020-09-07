@@ -2,6 +2,8 @@ package com.challengeorama.orama.di;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.challengeorama.orama.ui.detail.DetailViewModel;
 import com.challengeorama.orama.ui.main.MainViewModel;
 import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
 
@@ -20,5 +22,11 @@ public abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(MainViewModel.class)
     public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailViewModel.class)
+    public abstract ViewModel bindDetailViewModel(DetailViewModel viewModel);
+
 
 }

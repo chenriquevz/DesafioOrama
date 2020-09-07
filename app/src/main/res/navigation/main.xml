@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@+id/mainFragment"
+    app:startDestination="@id/mainFragment"
     >
 
     <fragment
@@ -14,7 +14,7 @@
 
         <action
             android:id="@+id/action_main_to_listScreen"
-            app:destination="@id/ListScreen">
+            app:destination="@id/detailFragment">
             <argument
                 android:name="fundoID"
                 app:argType="integer"
@@ -24,14 +24,16 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ListScreen"
+        android:id="@+id/detailFragment"
         android:name="com.challengeorama.orama.ui.detail.DetailFragment"
-        tools:layout="@layout/detail_fragment">
+        tools:layout="@layout/detail_fragment"
+        android:label=" ">
 
         <argument
             android:name="fundoID"
             app:argType="integer"
             app:nullable="false" />
+
 
     </fragment>
 

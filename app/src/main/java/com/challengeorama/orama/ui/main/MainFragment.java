@@ -12,13 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.challengeorama.orama.BaseApplication;
-import com.challengeorama.orama.R;
 import com.challengeorama.orama.databinding.MainFragmentBinding;
 import com.challengeorama.orama.model.Fundos;
 import com.challengeorama.orama.repository.Resource;
@@ -30,7 +28,7 @@ import javax.inject.Inject;
 
 public class MainFragment extends Fragment {
 
-    private MainFragmentBinding binding;
+    private MainFragmentBinding mBinding;
 
     private MainViewModel mViewModel;
 
@@ -41,8 +39,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = MainFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        mBinding = MainFragmentBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -64,7 +62,7 @@ public class MainFragment extends Fragment {
     private void subscribeObservers() {
 
         MainRecyclerAdapter adapter = new MainRecyclerAdapter();
-        RecyclerView recyclerView = binding.mainFundosRecycler;
+        RecyclerView recyclerView = mBinding.mainFundosRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
@@ -102,13 +100,13 @@ public class MainFragment extends Fragment {
     }
 
     public void showProgressBar(boolean visibility) {
-        binding.mainProgressbar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        mBinding.mainProgressbar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        mBinding = null;
     }
 
 
