@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         inject();
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         mBinding = MainActivityBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();

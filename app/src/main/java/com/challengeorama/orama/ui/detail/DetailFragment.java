@@ -49,6 +49,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DetailFragmentBinding.inflate(inflater, container, false);
+
         return mBinding.getRoot();
     }
 
@@ -121,6 +122,7 @@ public class DetailFragment extends Fragment {
                 mBinding.detailFundDescription.setText(fundos.getDescription().getObjective());
                 mBinding.detailFundmanagerName.setText(fundos.getFundManager().getFullName());
                 mBinding.detailFundmanagerDescription.setText(fundos.getFundManager().getDescription());
+
 
             }
         });
