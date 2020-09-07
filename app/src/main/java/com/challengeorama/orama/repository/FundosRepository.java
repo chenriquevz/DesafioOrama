@@ -37,14 +37,12 @@ public class FundosRepository {
 
             @Override
             protected void saveCallResult(@NonNull List<Fundos> item) throws Exception {
-
                 fundosDao.insertFundos(item);
-
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<Fundos> data) {
-                return data == null;
+                return true;
             }
 
             @NonNull

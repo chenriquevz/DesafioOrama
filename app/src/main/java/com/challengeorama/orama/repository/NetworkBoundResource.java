@@ -12,8 +12,6 @@ import androidx.lifecycle.Observer;
 
 import com.challengeorama.orama.api.ApiResponse;
 
-// CacheObject: Type for the Resource data. (database cache)
-// RequestObject: Type for the API response. (network request)
 public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
 
@@ -27,10 +25,8 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     private void init(){
 
-        // update LiveData for loading status
         results.setValue((Resource<CacheObject>) Resource.loading(null));
 
-        // observe LiveData source from local db
         final LiveData<CacheObject> dbSource = loadFromDb();
 
         results.addSource(dbSource, new Observer<CacheObject>() {
@@ -55,18 +51,10 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
         });
     }
 
-    /**
-     * 1) observe local db
-     * 2) if <condition/> query the network
-     * 3) stop observing the local db
-     * 4) insert new data into local db
-     * 5) begin observing local db again to see the refreshed data from network
-     * @param dbSource
-     */
+
     private void fetchFromNetwork(final LiveData<CacheObject> dbSource){
 
 
-        // update LiveData for loading status
         results.addSource(dbSource, new Observer<CacheObject>() {
             @Override
             public void onChanged(@Nullable CacheObject cacheObject) {
@@ -81,13 +69,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
             public void onChanged(@Nullable final ApiResponse<RequestObject> requestObjectApiResponse) {
                 results.removeSource(dbSource);
                 results.removeSource(apiResponse);
-
-                /*
-                    3 cases:
-                       1) ApiSuccessResponse
-                       2) ApiErrorResponse
-                       3) ApiEmptyResponse
-                 */
 
                 if(requestObjectApiResponse instanceof ApiResponse.ApiSuccessResponse){
 
@@ -156,25 +137,18 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
         }
     }
 
-    // Called to save the result of the API response into the database.
     @WorkerThread
     protected abstract void saveCallResult(@NonNull RequestObject item) throws Exception;
 
-    // Called with the data in the database to decide whether to fetch
-    // potentially updated data from the network.
     @MainThread
     protected abstract boolean shouldFetch(@Nullable CacheObject data);
 
-    // Called to get the cached data from the database.
     @NonNull @MainThread
     protected abstract LiveData<CacheObject> loadFromDb();
 
-    // Called to create the API call.
     @NonNull @MainThread
     protected abstract LiveData<ApiResponse<RequestObject>> createCall();
 
-    // Returns a LiveData object that represents the resource that's implemented
-    // in the base class.
     public final LiveData<Resource<CacheObject>> getAsLiveData(){
         return results;
     };

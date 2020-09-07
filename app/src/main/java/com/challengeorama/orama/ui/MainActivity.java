@@ -7,16 +7,9 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
 
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.R;
@@ -39,10 +32,7 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment != null ? navHostFragment.getNavController() : null;
 
-        Toolbar toolbar = mBinding.mainActionBar;
         assert navController != null;
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -52,20 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.mainFragment: {
 
-                        int color = ContextCompat.getColor(MainActivity.this, R.color.colorPrimary);
-                        ColorDrawable colorDrawable = new ColorDrawable(color);
 
                         getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark));
-                        mBinding.mainActionBar.setBackground(colorDrawable);
                         break;
                     }
                     case R.id.detailFragment: {
 
                         int color = ContextCompat.getColor(MainActivity.this, R.color.colorAccent);
-                        ColorDrawable colorDrawable = new ColorDrawable(color);
 
                         getWindow().setStatusBarColor(color);
-                        mBinding.mainActionBar.setBackground(colorDrawable);
                         break;
                     }
                 }

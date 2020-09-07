@@ -7,29 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_actionBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme"
+            android:visibility="visible" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_fundos_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:overScrollMode="never"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_appBar"
         tools:itemCount="20"
         tools:listitem="@layout/main_viewholder_fundos"
-        tools:spanCount="1"
-        android:visibility="visible"/>
+        tools:spanCount="1" />
 
     <ProgressBar
+        android:id="@+id/main_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/main_progressbar"/>
+        app:layout_constraintTop_toBottomOf="@id/main_appBar"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

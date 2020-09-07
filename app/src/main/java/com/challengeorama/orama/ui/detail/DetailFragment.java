@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.transition.TransitionInflater;
 
 import com.challengeorama.orama.BaseApplication;
@@ -56,10 +61,18 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        NavController navController = NavHostFragment.findNavController(this);
+
+        Toolbar toolbar = mBinding.detailActionBar;
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+
+
         mViewModel = new ViewModelProvider(requireActivity(), providerFactory).get(DetailViewModel.class);
         subscribeObservers();
 
-        mBinding.detailCoordinator.setTransitionName(requireContext().getResources().getString(R.string.main_sharedelementTransition,
+        mBinding.linearLayout.setTransitionName(requireContext().getResources().getString(R.string.main_sharedelementTransition,
                 DetailFragmentArgs.fromBundle(getArguments()).getFundoID()));
 
 
