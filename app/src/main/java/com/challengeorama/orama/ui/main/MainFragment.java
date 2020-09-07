@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.databinding.MainFragmentBinding;
@@ -40,6 +41,15 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = MainFragmentBinding.inflate(inflater, container, false);
+
+        postponeEnterTransition();
+        mBinding.mainFundosRecycler.getViewTreeObserver().addOnPreDrawListener(() -> {
+            startPostponedEnterTransition();
+            return true;
+        });
+
+
+
         return mBinding.getRoot();
     }
 

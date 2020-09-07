@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.view.View;
 
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.challengeorama.orama.R;
@@ -33,13 +34,20 @@ public class FundosViewHolder extends RecyclerView.ViewHolder {
                     new FormatHelper().FloatToReais(fundos.getOperability().getMinimumInitialApplicationAmount())));
 
 
+            mBinding.cardviewFundos.setTransitionName(res.getString(R.string.main_sharedelementTransition,
+                    fundos.getId()));
+
             mBinding.cardviewFundos.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
 
+                    FragmentNavigator.Extras.Builder extras = new FragmentNavigator.Extras.Builder();
+                    extras.addSharedElement(view, view.getTransitionName());
+                    FragmentNavigator.Extras build = extras.build();
+
                     Navigation.findNavController(view)
-                            .navigate(MainFragmentDirections.actionMainToListScreen(fundos.getId()));
+                            .navigate(MainFragmentDirections.actionMainToListScreen(fundos.getId()), build);
 
 
                 }

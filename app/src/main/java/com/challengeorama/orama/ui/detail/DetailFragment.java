@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.transition.TransitionInflater;
 
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.R;
@@ -19,11 +20,6 @@ import com.challengeorama.orama.databinding.DetailFragmentBinding;
 import com.challengeorama.orama.model.Fundos;
 import com.challengeorama.orama.util.FormatHelper;
 import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -35,6 +31,13 @@ public class DetailFragment extends Fragment {
 
     @Inject
     ViewModelProviderFactory providerFactory;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setSharedElementEnterTransition(TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move));
+    }
 
     @Nullable
     @Override
@@ -55,13 +58,16 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity(), providerFactory).get(DetailViewModel.class);
         subscribeObservers();
+
+        mBinding.detailCoordinator.setTransitionName(requireContext().getResources().getString(R.string.main_sharedelementTransition,
+                DetailFragmentArgs.fromBundle(getArguments()).getFundoID()));
+
+
     }
 
     private void subscribeObservers() {
 
-        Resources res = mBinding.getRoot().getContext().getResources();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Resources res = requireContext().getResources();
 
         mViewModel.getFundo(DetailFragmentArgs.fromBundle(getArguments()).getFundoID()).observe(getViewLifecycleOwner(), new Observer<Fundos>() {
 
