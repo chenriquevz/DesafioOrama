@@ -13,7 +13,7 @@ public interface FundosDao {
     @Insert
     void insertFundos(List<Fundos> fundos) throws Exception;
 
-    @Query("SELECT * FROM Fundos ORDER BY CASE WHEN 0 = 1 THEN initialDate END ASC, CASE WHEN 0 = 0 THEN initialDate END DESC" )
+    @Query("SELECT * FROM Fundos" )
     LiveData<List<Fundos>> getFundos();
 
     @Query("SELECT * FROM Fundos WHERE id = :id")

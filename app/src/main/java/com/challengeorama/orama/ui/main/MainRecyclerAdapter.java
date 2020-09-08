@@ -4,32 +4,27 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.challengeorama.orama.databinding.MainViewholderFundosBinding;
 import com.challengeorama.orama.model.fundos.Fundos;
 
-public class MainRecyclerAdapter extends ListAdapter<Fundos, FundosViewHolder> {
-    /**
-     * DiffUtil to compare the Repo data (old and new)
-     * for issuing notify commands suitably to update the list
-     */
-    private static DiffUtil.ItemCallback<Fundos> REPO_COMPARATOR
-            = new DiffUtil.ItemCallback<Fundos>() {
-        @Override
-        public boolean areItemsTheSame(Fundos oldItem, Fundos newItem) {
-            return oldItem.getId() == newItem.getId();
-        }
+import java.util.List;
 
-        @Override
-        public boolean areContentsTheSame(Fundos oldItem, @NonNull Fundos newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
 
-    MainRecyclerAdapter() {
-        super(REPO_COMPARATOR);
+class MainRecyclerAdapter extends RecyclerView.Adapter<FundosViewHolder> {
+    private final AsyncListDiffer<Fundos> mDiffer = new AsyncListDiffer(this, DIFF_CALLBACK);
+
+    @Override
+    public int getItemCount() {
+        return mDiffer.getCurrentList().size();
+    }
+
+    public void submitList(List<Fundos> list) {
+        mDiffer.submitList(list);
     }
 
     @NonNull
@@ -40,11 +35,28 @@ public class MainRecyclerAdapter extends ListAdapter<Fundos, FundosViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FundosViewHolder holder, int position) {
-            holder.bind(getItem(position));
-
+    public void onBindViewHolder(FundosViewHolder holder, int position) {
+        Fundos fundos = mDiffer.getCurrentList().get(position);
+        holder.bind(fundos);
     }
 
+    public static final DiffUtil.ItemCallback<Fundos> DIFF_CALLBACK
+            = new DiffUtil.ItemCallback<Fundos>() {
+        @Override
+        public boolean areItemsTheSame(
+                @NonNull Fundos oldUser, @NonNull Fundos newUser) {
+            // User properties may have changed if reloaded from the DB, but ID is fixed
+            return oldUser.getId() == newUser.getId();
+        }
 
+        @Override
+        public boolean areContentsTheSame(
+                @NonNull Fundos oldUser, @NonNull Fundos newUser) {
+            // NOTE: if you use equals, your object must properly override Object#equals()
+            // Incorrectly returning false here will result in too many animations.
+            return oldUser.equals(newUser);
+        }
+    };
 }
+
 

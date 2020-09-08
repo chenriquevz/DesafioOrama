@@ -20,5 +20,19 @@
     <string name="detail_rentabilidade_36m">36 meses: %s%%</string>
     <string name="detail_rentabilidade_48m">48 meses: %s%%</string>
     <string name="detail_rentabilidade_60m">60 meses: %s%%</string>
+    <string name="main_error">Erro</string>
+    <string name="main_error_detail">Aconteceu algo de errado e não conseguimos buscar a lista de fundos.</string>
+    <string name="main_error_refresh">Recarregar</string>
+    <string name="main_filter_title">Opções de filtro</string>
+    <string name="main_filter_profitability">Rentabilidade anual</string>
+    <string name="main_filter_initialdate">Data de início</string>
+    <string name="main_filter_minimumAmount">Aplicação mínima</string>
+    <string name="main_filter_name">Nome</string>
+    <string name="main_filter_orderby_title">Ordem</string>
+    <string name="main_filter_order_asc">Ascendente</string>
+    <string name="main_filter_order_dsc">Decrescente</string>
+    <string name="main_filter_clear">Limpar filtro</string>
+    <string name="main_filter_cancel">Cancelar</string>
+    <string name="main_filter_apply">Aplicar</string>
 
 </resources>

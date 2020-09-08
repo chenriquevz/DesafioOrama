@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.challengeorama.orama.api.ApiResponse;
 import com.challengeorama.orama.api.MainApi;
-import com.challengeorama.orama.model.FilterOptions;
+import com.challengeorama.orama.model.ListDataOptions;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.persistence.FundosDao;
@@ -15,8 +15,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import static com.challengeorama.orama.model.Filter.MinimumAmount;
 
 @Singleton
 public class FundosRepository {
@@ -36,34 +34,9 @@ public class FundosRepository {
         return fundosDao.getFundo(id);
     }
 
-    public LiveData<List<Fundos>> getFundosSorted(FilterOptions filterOptions) {
+    public LiveData<Resource<List<Fundos>>> getFundosSorted(@Nullable ListDataOptions filterOptions) {
 
-            if (filterOptions.getActive()) {
-
-                switch (filterOptions.getFilter()) {
-                    case MinimumAmount: {
-                        return fundosDao.getFundosOrderMinimumAmount(filterOptions.getSort() == Sort.ASC);
-                    }
-                    case Date: {
-                        return fundosDao.getFundosOrderDate(filterOptions.getSort() == Sort.ASC);
-                    }
-                    case profitabilityYear: {
-                        return fundosDao.getFundosOrderProfitability(filterOptions.getSort() == Sort.ASC);
-                    }
-                    case Name: {
-                       return fundosDao.getFundosOrderName(filterOptions.getSort() == Sort.ASC);
-                    }
-                }
-
-            }
-
-        return fundosDao.getFundos();
-
-    }
-
-    public LiveData<Resource<List<Fundos>>> observeFundos() {
         return new NetworkBoundResource<List<Fundos>, List<Fundos>>(AppExecutors.getInstance()) {
-
 
             @Override
             protected void saveCallResult(@NonNull List<Fundos> item) throws Exception {
@@ -72,13 +45,34 @@ public class FundosRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<Fundos> data) {
-                return true;
+                return data.isEmpty();
             }
 
             @NonNull
             @Override
             protected LiveData<List<Fundos>> loadFromDb() {
-                return fundosDao.getFundos();
+
+                if (filterOptions != null) {
+                    switch (filterOptions.getOption()) {
+                        case MinimumAmount: {
+                            return fundosDao.getFundosOrderMinimumAmount(filterOptions.getSort() == Sort.ASC);
+                        }
+                        case Date: {
+                            return fundosDao.getFundosOrderDate(filterOptions.getSort() == Sort.ASC);
+                        }
+                        case profitabilityYear: {
+                            return fundosDao.getFundosOrderProfitability(filterOptions.getSort() == Sort.ASC);
+                        }
+                        case Name: {
+                            return fundosDao.getFundosOrderName(filterOptions.getSort() == Sort.ASC);
+                        }
+                        default: {
+                            return fundosDao.getFundos();
+                        }
+                    }
+                } else {
+                    return fundosDao.getFundos();
+                }
             }
 
             @NonNull
@@ -87,7 +81,5 @@ public class FundosRepository {
                 return mainApi.getFundos();
             }
         }.getAsLiveData();
-
-
     }
 }

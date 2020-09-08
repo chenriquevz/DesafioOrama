@@ -3,17 +3,18 @@ package com.challengeorama.orama.ui.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-import com.challengeorama.orama.model.Filter;
-import com.challengeorama.orama.model.FilterOptions;
+
+import com.challengeorama.orama.model.Option;
+import com.challengeorama.orama.model.ListDataOptions;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.FundosRepository;
 import com.challengeorama.orama.repository.Resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,66 +31,71 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<Resource<List<Fundos>>> fundosMediatorLiveData = new MediatorLiveData<>();
 
-    private MediatorLiveData<FilterOptions> filterOptionsMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<ListDataOptions> listDataOptionsMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Boolean> isErrorActive = new MediatorLiveData<>();
 
 
-    public LiveData<FilterOptions> getFilterOptions() {
-        if (filterOptionsMediatorLiveData.getValue() == null) {
-            filterOptionsMediatorLiveData = new MediatorLiveData<>();
-            filterOptionsMediatorLiveData.setValue(new FilterOptions(true, Sort.ASC, Filter.MinimumAmount));
+    public LiveData<ListDataOptions> getListDataOptions() {
+        if (listDataOptionsMediatorLiveData.getValue() == null) {
+            listDataOptionsMediatorLiveData = new MediatorLiveData<>();
+            listDataOptionsMediatorLiveData.setValue(new ListDataOptions(false, Sort.NONE, Option.NONE));
         }
 
-        return filterOptionsMediatorLiveData;
+        return listDataOptionsMediatorLiveData;
     }
 
-    public void setFilterOptions(FilterOptions filterOptions) {
-        filterOptionsMediatorLiveData.setValue(filterOptions);
+    public void setListDataOptions(ListDataOptions filterOptions) {
+        listDataOptionsMediatorLiveData.setValue(filterOptions);
+        searchFundos(fundosRepository.getFundosSorted(filterOptions));
     }
 
-    private LiveData<Resource<List<Fundos>>> fundos() {
-        if (fundosMediatorLiveData.getValue() == null) {
+    public void forceRefresh() {
+        isErrorActive.setValue(true);
+    }
+
+    private LiveData<Resource<List<Fundos>>> getFundos(Boolean forceRefresh) {
+        if (fundosMediatorLiveData.getValue() == null || forceRefresh) {
             fundosMediatorLiveData = new MediatorLiveData<>();
-            searchFundos();
+            searchFundos(fundosRepository.getFundosSorted(null));
         }
 
         return fundosMediatorLiveData;
     }
 
-    public LiveData<Resource<List<Fundos>>> getFundos() {
+    private LiveData<Boolean> getIsErrorActive() {
+        if (isErrorActive.getValue() == null) {
+            isErrorActive = new MediatorLiveData<>();
+            isErrorActive.setValue(false);
+        }
 
-        return Transformations.switchMap(getFilterOptions(), filter -> {
-
-            if (filter.getActive()) {
-
-                return Transformations.map(fundosRepository.getFundosSorted(filter), Resource::success);
-
-            }
-
-            return fundos();
-
-        });
-
+        return isErrorActive;
     }
 
 
-    private void searchFundos() {
+    public LiveData<Resource<List<Fundos>>> getFundosFiltered() {
 
-        final LiveData<Resource<List<Fundos>>> repositorySource = fundosRepository.observeFundos();
+        return Transformations.switchMap(getIsErrorActive(), this::getFundos);
 
-        fundosMediatorLiveData.addSource(repositorySource, new Observer<Resource<List<Fundos>>>() {
+    }
+
+    private void searchFundos(LiveData<Resource<List<Fundos>>> repository) {
+
+        fundosMediatorLiveData.addSource(repository, new Observer<Resource<List<Fundos>>>() {
             @Override
             public void onChanged(Resource<List<Fundos>> listResource) {
 
                 if (listResource.status == Resource.Status.SUCCESS) {
 
-
+                    isErrorActive.setValue(false);
                     fundosMediatorLiveData.setValue(listResource);
-                    fundosMediatorLiveData.removeSource(repositorySource);
+                    fundosMediatorLiveData.removeSource(repository);
+
                 } else if (listResource.status == Resource.Status.ERROR) {
 
                     fundosMediatorLiveData.setValue(listResource);
-                    fundosMediatorLiveData.removeSource(repositorySource);
+                    fundosMediatorLiveData.removeSource(repository);
                 }
+
                 fundosMediatorLiveData.setValue(listResource);
             }
         });

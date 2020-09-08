@@ -1,10 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_filter_settings"
-          android:title="Filtro"
-          android:icon="@drawable/ic_baseline_filter_list_24"
-        android:orderInCategory="100"
-          app:showAsAction="always" />
+    <item
+        android:id="@+id/action_filter_settings"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="Filtro"
+        app:showAsAction="always" />
 </menu>

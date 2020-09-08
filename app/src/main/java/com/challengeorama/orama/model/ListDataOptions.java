@@ -1,15 +1,15 @@
 package com.challengeorama.orama.model;
 
-public class FilterOptions {
+public class ListDataOptions {
 
     private Boolean isActive;
     private Sort sort;
-    private Filter filter;
+    private Option option;
 
-    public FilterOptions(Boolean isActive, Sort sort, Filter filter) {
+    public ListDataOptions(Boolean isActive, Sort sort, Option filter) {
         this.isActive = isActive;
         this.sort = sort;
-        this.filter = filter;
+        this.option = filter;
 
     }
 
@@ -29,11 +29,11 @@ public class FilterOptions {
         this.sort = sort;
     }
 
-    public Filter getFilter() {
-        return filter;
+    public Option getOption() {
+        return option;
     }
 
-    public void setFilter(Filter filter) {
-        this.filter = filter;
+    public void setOption(Option option) {
+        this.option = option;
     }
 }

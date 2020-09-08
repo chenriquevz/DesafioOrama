@@ -11,29 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.challengeorama.orama.BaseApplication;
 import com.challengeorama.orama.R;
 import com.challengeorama.orama.databinding.MainFragmentBinding;
-import com.challengeorama.orama.model.Filter;
-import com.challengeorama.orama.model.FilterOptions;
+import com.challengeorama.orama.model.Option;
+import com.challengeorama.orama.model.ListDataOptions;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.Resource;
@@ -49,6 +47,8 @@ public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
 
+    private MainRecyclerAdapter mAdapter;
+
     @Inject
     ViewModelProviderFactory providerFactory;
 
@@ -57,6 +57,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = MainFragmentBinding.inflate(inflater, container, false);
+
 
         postponeEnterTransition();
         mBinding.mainFundosRecycler.getViewTreeObserver().addOnPreDrawListener(() -> {
@@ -81,10 +82,24 @@ public class MainFragment extends Fragment {
         NavController navController = NavHostFragment.findNavController(this);
 
         Toolbar toolbar = mBinding.mainActionBar;
+        toolbar.inflateMenu(R.menu.main_menu);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-        setHasOptionsMenu(true);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (item.getItemId() == R.id.action_filter_settings) {
+                    showFilterDialog();
+                    return true;
+
+                }
+                return false;
+            }
+        });
+
 
         mViewModel = new ViewModelProvider(this, providerFactory).get(MainViewModel.class);
         subscribeObservers();
@@ -92,33 +107,21 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.main_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.action_filter_settings) {
-            showFilterDialog();
-            return true;
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void subscribeObservers() {
 
-        MainRecyclerAdapter adapter = new MainRecyclerAdapter();
+        mAdapter = new MainRecyclerAdapter();
         RecyclerView recyclerView = mBinding.mainFundosRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(null);
 
-        mViewModel.getFundos().observe(getViewLifecycleOwner(), new Observer<Resource<List<Fundos>>>() {
+
+        mViewModel.getFundosFiltered().observe(getViewLifecycleOwner(), new Observer<Resource<List<Fundos>>>() {
             @Override
             public void onChanged(Resource<List<Fundos>> fundos) {
-
-                Log.d("livedataTestFrag", fundos.status.toString());
 
                 switch (fundos.status) {
 
@@ -129,16 +132,15 @@ public class MainFragment extends Fragment {
 
                     case ERROR: {
                         showProgressBar(false);
+                        showErrorDialog();
                         break;
                     }
 
                     case SUCCESS: {
                         if (fundos.data != null) {
-                            Log.d("livedataTestFrag", fundos.data.get(0).toString());
                             showProgressBar(false);
-                            adapter.submitList(fundos.data);
+                            mAdapter.submitList(fundos.data);
                         }
-                        showFilterDialog();
                         break;
                     }
                 }
@@ -154,13 +156,14 @@ public class MainFragment extends Fragment {
         MaterialDialog dialog = new MaterialDialog(requireActivity(), MaterialDialog.getDEFAULT_BEHAVIOR())
                 .noAutoDismiss();
 
-        dialog.getView().contentLayout.addCustomView(R.layout.main_filter, null, true, false);
+        dialog.getView().contentLayout.addCustomView(R.layout.main_filter, null, true, false, false);
+
 
         View view = dialog.getView().contentLayout.getCustomView();
         RadioGroup filterGroup = view.findViewById(R.id.filter_group);
         RadioGroup orderGroup = view.findViewById(R.id.filter_order_group);
 
-        FilterOptions filterOptions = mViewModel.getFilterOptions().getValue();
+        ListDataOptions filterOptions = mViewModel.getListDataOptions().getValue();
 
         if (filterOptions.getActive()) {
 
@@ -170,7 +173,7 @@ public class MainFragment extends Fragment {
                 orderGroup.check(R.id.filter_desc);
             }
 
-            switch (filterOptions.getFilter()) {
+            switch (filterOptions.getOption()) {
                 case Date: {
                     filterGroup.check(R.id.filter_date);
                     break;
@@ -189,7 +192,6 @@ public class MainFragment extends Fragment {
                 }
 
 
-
             }
 
         }
@@ -199,14 +201,18 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                mAdapter.submitList(null);
+                showProgressBar(true);
+
                 switch (filterGroup.getCheckedRadioButtonId()) {
                     case R.id.filter_date: {
 
                         if (orderGroup.getCheckedRadioButtonId() == R.id.filter_asc) {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.ASC, Filter.Date));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.ASC, Option.Date));
                         } else {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.DSC, Filter.Date));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.DSC, Option.Date));
                         }
+
                         dialog.dismiss();
                         break;
 
@@ -214,9 +220,9 @@ public class MainFragment extends Fragment {
                     case R.id.filter_minimumamount: {
 
                         if (orderGroup.getCheckedRadioButtonId() == R.id.filter_asc) {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.ASC, Filter.MinimumAmount));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.ASC, Option.MinimumAmount));
                         } else {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.DSC, Filter.MinimumAmount));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.DSC, Option.MinimumAmount));
                         }
                         dialog.dismiss();
                         break;
@@ -224,9 +230,9 @@ public class MainFragment extends Fragment {
                     case R.id.filter_name: {
 
                         if (orderGroup.getCheckedRadioButtonId() == R.id.filter_asc) {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.ASC, Filter.Name));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.ASC, Option.Name));
                         } else {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.DSC, Filter.Name));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.DSC, Option.Name));
                         }
                         dialog.dismiss();
                         break;
@@ -235,20 +241,72 @@ public class MainFragment extends Fragment {
                     case R.id.filter_profitability: {
 
                         if (orderGroup.getCheckedRadioButtonId() == R.id.filter_asc) {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.ASC, Filter.profitabilityYear));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.ASC, Option.profitabilityYear));
                         } else {
-                            mViewModel.setFilterOptions(new FilterOptions(true, Sort.DSC, Filter.profitabilityYear));
+                            mViewModel.setListDataOptions(new ListDataOptions(true, Sort.DSC, Option.profitabilityYear));
                         }
                         dialog.dismiss();
                         break;
 
                     }
+                    default: {
+                        mViewModel.setListDataOptions(new ListDataOptions(false, Sort.NONE, Option.NONE));
+                        dialog.dismiss();
+                        break;
+                    }
+
                 }
 
             }
         });
 
+        view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
+            }
+        });
+
+        view.findViewById(R.id.clear_button).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                filterGroup.clearCheck();
+                orderGroup.clearCheck();
+
+            }
+        });
+
+
         dialog.show();
+    }
+
+    private void showErrorDialog() {
+
+        MaterialDialog dialog = new MaterialDialog(requireActivity(), MaterialDialog.getDEFAULT_BEHAVIOR())
+                .noAutoDismiss();
+
+        dialog.getView().contentLayout.addCustomView(R.layout.main_error, null, true, false, false);
+
+
+        View view = dialog.getView().contentLayout.getCustomView();
+
+        view.findViewById(R.id.refresh_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mViewModel.forceRefresh();
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
+
     }
 
     public void showProgressBar(boolean visibility) {
