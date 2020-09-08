@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Desafio Orama</string>
 
-    <string name="main_rentabilidade_anual">Rentabilidade último ano: %s%%</string>
+    <string name="main_rentabilidade_anual">Rentabilidade ano atual: %s%%</string>
     <string name="main_rentabilidade_mensal">Rentabilidade último mês: %s%%</string>
     <string name="main_rentabilidade_diaria">Rentabilidade último dia: %s%%</string>
     <string name="main_fees">Taxa administrativa: %1$s</string>

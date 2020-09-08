@@ -16,10 +16,10 @@ import java.util.Locale;
 
 public class FormatHelper {
 
-    public String FloatToReais(@Nullable  Float number) {
+    public String FloatToReais( Float number) {
 
-        try {
-            if (number == null) {
+
+            if (number != null) {
                 DecimalFormat formatter = new DecimalFormat("#,###.##");
 
                 return formatter.format(number);
@@ -27,27 +27,22 @@ public class FormatHelper {
                 return "0";
             }
 
-        } catch (Exception e) {
-            return "0";
-        }
+
 
     }
 
-    public String FloatToPercent(@Nullable Float number) {
+    public String FloatToPercent( Float number) {
 
-        try {
-            if (number == null) {
-                DecimalFormat formatter = new DecimalFormat("#,##0.00");
+            if (number != null) {
+                DecimalFormat formatter = new DecimalFormat("#,##0.0000");
 
                 return formatter.format(number);
             } else {
                 return "0,00";
             }
-        } catch (Exception e) {
-            return "0";
-        }
 
     }
+
 
     public String StringToDateString(String date) {
 

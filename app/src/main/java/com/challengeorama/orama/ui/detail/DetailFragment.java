@@ -50,6 +50,12 @@ public class DetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DetailFragmentBinding.inflate(inflater, container, false);
 
+        postponeEnterTransition();
+        mBinding.detailMinimumAmount.getViewTreeObserver().addOnPreDrawListener(() -> {
+            startPostponedEnterTransition();
+            return true;
+        });
+
         return mBinding.getRoot();
     }
 

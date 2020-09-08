@@ -39,19 +39,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
 
+
+                int colorAccent = ContextCompat.getColor(MainActivity.this, R.color.colorAccent);
+                int colorDark = ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark);
+
                 switch (destination.getId()) {
 
                     case R.id.mainFragment: {
 
-
-                        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(colorDark);
                         break;
                     }
                     case R.id.detailFragment: {
 
-                        int color = ContextCompat.getColor(MainActivity.this, R.color.colorAccent);
 
-                        getWindow().setStatusBarColor(color);
+                        getWindow().setStatusBarColor(colorAccent);
                         break;
                     }
                 }

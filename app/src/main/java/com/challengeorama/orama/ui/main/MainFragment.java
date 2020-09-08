@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -138,6 +139,11 @@ public class MainFragment extends Fragment {
 
                     case SUCCESS: {
                         if (fundos.data != null) {
+                            Log.d("dataOutput-0-day", fundos.data.get(0).getProfitabilities().getDay().toString());
+                            Log.d("dataOutput-1-day", fundos.data.get(1).getProfitabilities().getDay().toString());
+                            Log.d("dataOutput-1-month", fundos.data.get(1).getProfitabilities().getMonth().toString());
+                            Log.d("dataOutput-0-month", fundos.data.get(0).getProfitabilities().getMonth().toString());
+
                             showProgressBar(false);
                             mAdapter.submitList(fundos.data);
                         }
