@@ -16,6 +16,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import static com.challengeorama.orama.model.Filter.MinimumAmount;
+
 @Singleton
 public class FundosRepository {
 
@@ -34,31 +36,26 @@ public class FundosRepository {
         return fundosDao.getFundo(id);
     }
 
-    public LiveData<List<Fundos>> getFundosSorted(List<FilterOptions> filterOptions) {
+    public LiveData<List<Fundos>> getFundosSorted(FilterOptions filterOptions) {
 
-        for (FilterOptions item : filterOptions) {
+            if (filterOptions.getActive()) {
 
-            if (item.getActive()) {
-
-                switch (item.getFilter()) {
+                switch (filterOptions.getFilter()) {
                     case MinimumAmount: {
-                        return fundosDao.getFundosOrderMinimumAmount(item.getSort() == Sort.ASC);
+                        return fundosDao.getFundosOrderMinimumAmount(filterOptions.getSort() == Sort.ASC);
                     }
                     case Date: {
-                        return fundosDao.getFundosOrderDate(item.getSort() == Sort.ASC);
+                        return fundosDao.getFundosOrderDate(filterOptions.getSort() == Sort.ASC);
                     }
                     case profitabilityYear: {
-                        return fundosDao.getFundosOrderProfitability(item.getSort() == Sort.ASC);
+                        return fundosDao.getFundosOrderProfitability(filterOptions.getSort() == Sort.ASC);
                     }
                     case Name: {
-                       return fundosDao.getFundosOrderName(item.getSort() == Sort.ASC);
+                       return fundosDao.getFundosOrderName(filterOptions.getSort() == Sort.ASC);
                     }
                 }
 
             }
-
-        }
-
 
         return fundosDao.getFundos();
 

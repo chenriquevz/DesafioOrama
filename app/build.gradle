@@ -109,4 +109,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$androidx_espresso_idling_resource"
     implementation "androidx.test.espresso:espresso-idling-resource:$androidx_espresso_idling_resource"
 
+    //MaterialDialog
+    def material_dialog = "3.2.1"
+    implementation "com.afollestad.material-dialogs:core:$material_dialog"
 }

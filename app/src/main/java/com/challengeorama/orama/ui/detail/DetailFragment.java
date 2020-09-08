@@ -89,44 +89,130 @@ public class DetailFragment extends Fragment {
             public void onChanged(Fundos fundos) {
 
                 mBinding.appBarTitle.setText(fundos.getSimpleName());
-                mBinding.detailMinimumAmount.setText(res.getString(
-                        R.string.main_operability_minimumInitialApplicationAmount,
-                        new FormatHelper().FloatToReais(fundos.getOperability().getMinimumInitialApplicationAmount())));
-                mBinding.detailOperabilityMinimumBalance.setText(res.getString(
-                        R.string.main_operability_minimumBalance,
-                        new FormatHelper().FloatToReais(fundos.getOperability().getMinimumBalancePermanence())));
                 mBinding.detailFees.setText(res.getString(R.string.main_fees,
                         fundos.getFees().getAdministrationFee()));
-
                 mBinding.detailFundoInitialDate.setText(res.getString(R.string.detail_fundo_initialDate,
                         new FormatHelper().StringToDateString(fundos.getInitialDate())));
-
-
-                mBinding.detailProfitabilityDay.setText(res.getString(R.string.detail_rentabilidade_diaria,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getDay())));
-                mBinding.detailProfitabilityMonth.setText(res.getString(R.string.detail_rentabilidade_mensal,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getMonth())));
-                mBinding.detailProfitabilityYear.setText(res.getString(R.string.detail_rentabilidade_anual,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getYear())));
-                mBinding.detailProfitabilityM12.setText(res.getString(R.string.detail_rentabilidade_12m,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM12())));
-                mBinding.detailProfitabilityM24.setText(res.getString(R.string.detail_rentabilidade_24m,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM24())));
-                mBinding.detailProfitabilityM36.setText(res.getString(R.string.detail_rentabilidade_36m,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM36())));
-                mBinding.detailProfitabilityM48.setText(res.getString(R.string.detail_rentabilidade_48m,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM48())));
-                mBinding.detailProfitabilityM60.setText(res.getString(R.string.detail_rentabilidade_60m,
-                        new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM60())));
-
                 mBinding.detailFundDescription.setText(fundos.getDescription().getObjective());
                 mBinding.detailFundmanagerName.setText(fundos.getFundManager().getFullName());
                 mBinding.detailFundmanagerDescription.setText(fundos.getFundManager().getDescription());
+
+
+                bindOperability(fundos);
+                bindProfitability(fundos);
 
 
             }
         });
     }
 
+    private void bindOperability(Fundos fundos) {
+
+        Resources res = requireContext().getResources();
+
+        mBinding.detailMinimumAmount.setText(res.getString(
+                R.string.main_operability_minimumInitialApplicationAmount,
+                new FormatHelper().FloatToReais(fundos.getOperability().getMinimumInitialApplicationAmount())));
+        mBinding.detailOperabilityMinimumBalance.setText(res.getString(
+                R.string.main_operability_minimumBalance,
+                new FormatHelper().FloatToReais(fundos.getOperability().getMinimumBalancePermanence())));
+
+
+    }
+
+    private void bindProfitability(Fundos fundos) {
+
+        Resources res = requireContext().getResources();
+
+
+        String profitabilityMonth = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityMonth = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getMonth());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityMonth.setText(res.getString(R.string.detail_rentabilidade_mensal,
+                profitabilityMonth));
+
+
+        String profitabilityDay = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityDay = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getDay());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityDay.setText(res.getString(R.string.detail_rentabilidade_diaria,
+                profitabilityDay));
+
+
+        String profitabilityYear = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityYear = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getYear());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityYear.setText(res.getString(R.string.detail_rentabilidade_anual,
+                profitabilityYear));
+
+
+        String profitabilityM12 = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityM12 = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM12());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityM12.setText(res.getString(R.string.detail_rentabilidade_12m,
+                profitabilityM12));
+
+
+        String profitabilityM24 = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityM24 = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM24());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityM24.setText(res.getString(R.string.detail_rentabilidade_24m,
+                profitabilityM24));
+
+
+        String profitabilityM36 = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityM36 = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM36());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityM36.setText(res.getString(R.string.detail_rentabilidade_36m,
+                profitabilityM36));
+
+
+        String profitabilityM48 = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityM48 = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM36());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityM48.setText(res.getString(R.string.detail_rentabilidade_48m,
+                profitabilityM48));
+
+
+        String profitabilityM60 = new FormatHelper().FloatToPercent(0.00f);
+        try {
+            profitabilityM60 = new FormatHelper().FloatToPercent(fundos.getProfitabilities().getM36());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mBinding.detailProfitabilityM60.setText(res.getString(R.string.detail_rentabilidade_60m,
+                profitabilityM60));
+
+
+    }
 
 }

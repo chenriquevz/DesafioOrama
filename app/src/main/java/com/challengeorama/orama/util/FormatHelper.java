@@ -4,6 +4,9 @@ import android.nfc.FormatException;
 
 import androidx.annotation.Nullable;
 
+import com.challengeorama.orama.repository.Resource;
+import com.google.android.material.textview.MaterialTextView;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -24,11 +27,9 @@ public class FormatHelper {
                 return "0";
             }
 
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return "0";
         }
-
-
 
     }
 
@@ -42,11 +43,9 @@ public class FormatHelper {
             } else {
                 return "0,00";
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return "0";
         }
-
-
 
     }
 
@@ -63,8 +62,7 @@ public class FormatHelper {
         } catch (ParseException ex) {
             return null;
         }
-
-
     }
+
 
 }

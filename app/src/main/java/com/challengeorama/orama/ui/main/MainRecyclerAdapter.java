@@ -41,7 +41,8 @@ public class MainRecyclerAdapter extends ListAdapter<Fundos, FundosViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FundosViewHolder holder, int position) {
-        holder.bind(getItem(position));
+            holder.bind(getItem(position));
+
     }
 
 

@@ -1,13 +1,11 @@
 package com.challengeorama.orama.ui.main;
 
-import android.widget.Switch;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-
 import com.challengeorama.orama.model.Filter;
 import com.challengeorama.orama.model.FilterOptions;
 import com.challengeorama.orama.model.Sort;
@@ -16,7 +14,6 @@ import com.challengeorama.orama.repository.FundosRepository;
 import com.challengeorama.orama.repository.Resource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,55 +30,47 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<Resource<List<Fundos>>> fundosMediatorLiveData = new MediatorLiveData<>();
 
-    private MediatorLiveData<List<FilterOptions>> filterOptionsMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<FilterOptions> filterOptionsMediatorLiveData = new MediatorLiveData<>();
 
-    public void startSearchFundos() {
 
-        if (fundosMediatorLiveData.getValue() == null) {
-            searchFundos();
-            initFilterOptions();
+    public LiveData<FilterOptions> getFilterOptions() {
+        if (filterOptionsMediatorLiveData.getValue() == null) {
+            filterOptionsMediatorLiveData = new MediatorLiveData<>();
+            filterOptionsMediatorLiveData.setValue(new FilterOptions(true, Sort.ASC, Filter.MinimumAmount));
         }
 
-    }
-
-    private void initFilterOptions() {
-
-        List<FilterOptions> list = new ArrayList<FilterOptions>();
-
-        list.add(new FilterOptions(false, Sort.DSC, Filter.profitabilityYear));
-        list.add(new FilterOptions(true, Sort.DSC, Filter.Date));
-        list.add(new FilterOptions(false, Sort.DSC, Filter.MinimumAmount));
-        list.add(new FilterOptions(false, Sort.DSC, Filter.Name));
-
-        filterOptionsMediatorLiveData.setValue(list);
-
-    }
-
-    public LiveData<List<FilterOptions>> getFilterOptions() {
         return filterOptionsMediatorLiveData;
     }
 
-    public void setFilterOptions(List<FilterOptions> filterOptions) {
+    public void setFilterOptions(FilterOptions filterOptions) {
         filterOptionsMediatorLiveData.setValue(filterOptions);
     }
 
     private LiveData<Resource<List<Fundos>>> fundos() {
+        if (fundosMediatorLiveData.getValue() == null) {
+            fundosMediatorLiveData = new MediatorLiveData<>();
+            searchFundos();
+        }
+
         return fundosMediatorLiveData;
     }
 
     public LiveData<Resource<List<Fundos>>> getFundos() {
 
-        return Transformations.switchMap(filterOptionsMediatorLiveData, filter -> {
+        return Transformations.switchMap(getFilterOptions(), filter -> {
 
-            if (filter.stream().anyMatch(FilterOptions::getActive)) {
+            if (filter.getActive()) {
 
                 return Transformations.map(fundosRepository.getFundosSorted(filter), Resource::success);
 
-            } else {
-                return fundos();
             }
+
+            return fundos();
+
         });
+
     }
+
 
     private void searchFundos() {
 
