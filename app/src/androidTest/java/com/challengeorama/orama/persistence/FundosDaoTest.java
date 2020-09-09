@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
+
 public class FundosDaoTest {
 
 
@@ -52,7 +54,7 @@ public class FundosDaoTest {
     @Test
     public void getFundos() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -86,7 +88,7 @@ public class FundosDaoTest {
 
         int fundoID = 99;
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -112,7 +114,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderName_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -143,7 +145,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderName_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -174,7 +176,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderDate_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -206,7 +208,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderDate_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -238,7 +240,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderProfitability_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -269,7 +271,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderProfitability_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -300,7 +302,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderMinimumAmount_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -331,7 +333,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderMinimumAmount_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, "fundos.json");
+        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);

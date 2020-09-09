@@ -19,6 +19,7 @@ import org.junit.Test;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -44,7 +45,7 @@ public class MainViewModelTests {
     public void getFundosFiltered() throws Exception {
 
         //SETUP
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -68,7 +69,7 @@ public class MainViewModelTests {
     public void getFundosFiltered_setListDataOptions() throws Exception {
 
         //SETUP
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -112,7 +113,7 @@ public class MainViewModelTests {
     public void getFundosFiltered_Error_And_Refresh() throws Exception {
 
         //SETUP
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);

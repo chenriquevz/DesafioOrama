@@ -10,32 +10,23 @@ import com.challengeorama.orama.util.LiveDataTestUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.bouncycastle.util.encoders.UTF8;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.mockito.Mock;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
 import okio.BufferedSource;
 import okio.Okio;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
 import static org.junit.Assert.*;
 
 public class MainApiTests {
@@ -67,9 +58,9 @@ public class MainApiTests {
     @Test
     public void getFundos() throws Exception {
 
-        enqueueResponse("fundos.json");
+        enqueueResponse(FUNDOSJSON);
 
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);

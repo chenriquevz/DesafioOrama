@@ -24,6 +24,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
+import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -55,7 +56,7 @@ public class FundosRepositoryTests {
 
         int fundoID = 1013;
 
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -86,7 +87,7 @@ public class FundosRepositoryTests {
 
         int fundoID = -10;
 
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -114,7 +115,7 @@ public class FundosRepositoryTests {
     public void getFundosSorted_get_valid() throws Exception {
 
 
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -137,7 +138,7 @@ public class FundosRepositoryTests {
     public void getFundosSorted_get_emptyLocal() throws Exception {
 
         //carregando dados do JSON
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = Collections.emptyList();

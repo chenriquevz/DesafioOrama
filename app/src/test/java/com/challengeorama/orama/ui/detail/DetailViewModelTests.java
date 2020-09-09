@@ -20,6 +20,7 @@ import org.junit.Test;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -47,7 +48,7 @@ public class DetailViewModelTests {
         int fundoID = 99;
 
         //SETUP
-        String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
+        String data = new JsonUnitTest().readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
