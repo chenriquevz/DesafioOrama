@@ -5,14 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.FundosRepository;
-import com.challengeorama.orama.repository.Resource;
-import com.challengeorama.orama.ui.main.MainViewModel;
+import com.challengeorama.orama.repository.IFundosRepository;
 import com.challengeorama.orama.util.JsonUnitTest;
 import com.challengeorama.orama.util.LiveDataTestUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,7 +30,7 @@ public class DetailViewModelTests {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private FundosRepository fundosRepository;
+    private IFundosRepository fundosRepository;
 
     private DetailViewModel viewModel;
 

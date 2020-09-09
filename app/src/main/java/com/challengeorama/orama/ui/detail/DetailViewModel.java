@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.challengeorama.orama.model.fundos.Fundos;
-import com.challengeorama.orama.repository.FundosRepository;
+import com.challengeorama.orama.repository.IFundosRepository;
 
 import javax.inject.Inject;
 
 public class DetailViewModel extends ViewModel {
 
-    private final FundosRepository fundosRepository;
+    private final IFundosRepository fundosRepository;
 
     @Inject
-    public DetailViewModel(FundosRepository fundosRepository) {
+    public DetailViewModel(IFundosRepository fundosRepository) {
         this.fundosRepository = fundosRepository;
     }
 

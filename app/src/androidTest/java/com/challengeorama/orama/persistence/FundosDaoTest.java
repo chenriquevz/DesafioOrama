@@ -1,60 +1,63 @@
 package com.challengeorama.orama.persistence;
 
-import android.app.Application;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
-import androidx.room.Room;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.challengeorama.orama.TestBaseApplication;
+import com.challengeorama.orama.di.TestAppComponent;
 import com.challengeorama.orama.model.fundos.Fundos;
+import com.challengeorama.orama.ui.BaseFragmentTest;
 import com.challengeorama.orama.util.JsonUITest;
-import com.challengeorama.orama.util.JsonUnitTest;
 import com.challengeorama.orama.util.LiveDataTestUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
 
-public class FundosDaoTest {
+@RunWith(AndroidJUnit4.class)
+public class FundosDaoTest extends BaseFragmentTest {
 
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
 
-    FundosDatabase fundosDatabase;
+    @Inject
+    JsonUITest jsonUITest;
+
+    @Inject
     FundosDao fundosDao;
-    Application app = (Application) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
 
     @Before
     public void setup() {
 
-        fundosDatabase = Room.inMemoryDatabaseBuilder(app, FundosDatabase.class).build();
-        fundosDao = fundosDatabase.getFundosDao();
-    }
+        TestBaseApplication app = (TestBaseApplication) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
 
-    @After
-    public void closeDb() throws IOException {
-        fundosDatabase.close();
+        injectTest(app);
+
+
     }
 
     @Test
     public void getFundos() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -88,7 +91,7 @@ public class FundosDaoTest {
 
         int fundoID = 99;
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -114,7 +117,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderName_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -145,7 +148,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderName_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -176,7 +179,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderDate_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -208,7 +211,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderDate_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -240,7 +243,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderProfitability_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -271,7 +274,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderProfitability_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -302,7 +305,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderMinimumAmount_dsc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -333,7 +336,7 @@ public class FundosDaoTest {
     @Test
     public void getFundosOrderMinimumAmount_asc() throws Exception {
 
-        String data = new JsonUITest().readJsonFromAsset(app, FUNDOSJSON);
+        String data = jsonUITest.readJsonFromAsset(FUNDOSJSON);
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = new Gson().fromJson(data, reviewType);
@@ -361,4 +364,8 @@ public class FundosDaoTest {
 
     }
 
+    @Override
+    public void injectTest(TestBaseApplication application) {
+        ((TestAppComponent) application.appComponent).inject(this);
+    }
 }

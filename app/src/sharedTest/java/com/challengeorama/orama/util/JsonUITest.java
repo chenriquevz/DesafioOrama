@@ -7,13 +7,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import javax.inject.Inject;
+
 import okio.BufferedSource;
 import okio.Okio;
 
 public class JsonUITest {
 
 
-    public String readJsonFromAsset(Application app, String filename) {
+    Application app;
+
+    @Inject
+    public JsonUITest(Application app) {
+        this.app = app;
+    }
+
+
+    public String readJsonFromAsset(String filename) {
 
         try {
             InputStream input = ((AssetManager) app.getAssets()).open(filename);

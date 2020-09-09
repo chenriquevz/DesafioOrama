@@ -3,7 +3,6 @@ package com.challengeorama.orama.ui.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
@@ -12,7 +11,7 @@ import com.challengeorama.orama.model.Option;
 import com.challengeorama.orama.model.ListDataOptions;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
-import com.challengeorama.orama.repository.FundosRepository;
+import com.challengeorama.orama.repository.IFundosRepository;
 import com.challengeorama.orama.repository.Resource;
 
 import java.util.List;
@@ -22,10 +21,10 @@ import javax.inject.Inject;
 public class MainViewModel extends ViewModel {
 
 
-    private final FundosRepository fundosRepository;
+    private final IFundosRepository fundosRepository;
 
     @Inject
-    public MainViewModel(FundosRepository fundosRepository) {
+    public MainViewModel(IFundosRepository fundosRepository) {
         this.fundosRepository = fundosRepository;
     }
 

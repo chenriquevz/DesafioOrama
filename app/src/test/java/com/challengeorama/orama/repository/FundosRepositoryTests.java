@@ -12,7 +12,6 @@ import com.challengeorama.orama.util.LiveDataTestUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class FundosRepositoryTests {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private FundosRepository fundosRepository;
+    private IFundosRepository fundosRepository;
 
     private FundosDao fundosDao;
 

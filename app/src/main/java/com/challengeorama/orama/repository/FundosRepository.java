@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class FundosRepository {
+public class FundosRepository implements IFundosRepository {
 
     @NonNull
     private final FundosDao fundosDao;
@@ -30,10 +30,12 @@ public class FundosRepository {
         this.mainApi = mainApi;
     }
 
+    @Override
     public LiveData<Fundos> getFundo(int id) {
         return fundosDao.getFundo(id);
     }
 
+    @Override
     public LiveData<Resource<List<Fundos>>> getFundosSorted(@Nullable ListDataOptions filterOptions) {
 
         return new NetworkBoundResource<List<Fundos>, List<Fundos>>(AppExecutors.getInstance()) {

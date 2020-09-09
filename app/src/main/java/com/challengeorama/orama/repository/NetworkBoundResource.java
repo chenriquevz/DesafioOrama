@@ -11,12 +11,15 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
 import com.challengeorama.orama.api.ApiResponse;
+import com.challengeorama.orama.util.EspressoIdlingResource;
 
 public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
 
     private AppExecutors appExecutors;
     private MediatorLiveData<Resource<CacheObject>> results = new MediatorLiveData<>();
+
+    EspressoIdlingResource espressoIdlingResource = new EspressoIdlingResource();
 
     public NetworkBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
@@ -25,6 +28,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     private void init(){
 
+        espressoIdlingResource.increment();
         results.setValue((Resource<CacheObject>) Resource.loading(null));
 
         final LiveData<CacheObject> dbSource = loadFromDb();
@@ -44,6 +48,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         @Override
                         public void onChanged(@Nullable CacheObject cacheObject) {
                             setValue(Resource.success(cacheObject));
+                            espressoIdlingResource.decrement();
                         }
                     });
                 }
@@ -90,6 +95,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                                         @Override
                                         public void onChanged(@Nullable CacheObject cacheObject) {
                                             setValue(Resource.success(cacheObject));
+                                            espressoIdlingResource.decrement();
                                         }
                                     });
                                 }
@@ -105,6 +111,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                                 @Override
                                 public void onChanged(@Nullable CacheObject cacheObject) {
                                     setValue(Resource.success(cacheObject));
+                                    espressoIdlingResource.decrement();
                                 }
                             });
                         }
@@ -119,7 +126,9 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                                             ((ApiResponse.ApiErrorResponse) requestObjectApiResponse).getErrorMessage(),
                                             cacheObject
                                     )
+
                             );
+                            espressoIdlingResource.decrement();
                         }
                     });
                 }

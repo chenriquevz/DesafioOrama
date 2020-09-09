@@ -7,6 +7,7 @@ import com.challengeorama.orama.model.Option;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.FundosRepository;
+import com.challengeorama.orama.repository.IFundosRepository;
 import com.challengeorama.orama.repository.Resource;
 import com.challengeorama.orama.util.JsonUnitTest;
 import com.challengeorama.orama.util.LiveDataTestUtil;
@@ -31,7 +32,7 @@ public class MainViewModelTests {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private FundosRepository fundosRepository;
+    private IFundosRepository fundosRepository;
 
     private MainViewModel viewModel;
 

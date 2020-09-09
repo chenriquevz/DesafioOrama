@@ -139,7 +139,6 @@ public class MainFragment extends Fragment {
 
                     case SUCCESS: {
                         if (fundos.data != null) {
-
                             showProgressBar(false);
                             mAdapter.submitList(fundos.data);
                         }
