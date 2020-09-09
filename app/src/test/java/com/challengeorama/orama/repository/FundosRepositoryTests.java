@@ -26,6 +26,9 @@ import retrofit2.Response;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class FundosRepositoryTests {
@@ -133,35 +136,50 @@ public class FundosRepositoryTests {
     @Test
     public void getFundosSorted_get_emptyLocal() throws Exception {
 
+        //carregando dados do JSON
         String data = new JsonUnitTest().readJsonFromAsset("fundos.json");
         Type reviewType = new TypeToken<List<Fundos>>() {
         }.getType();
         List<Fundos> fundos = Collections.emptyList();
 
+        //retorno empty do room
         List<Fundos> fundosNetwork = new Gson().fromJson(data, reviewType);
-
         LiveDataTestUtil<Resource<List<Fundos>>> liveDataTestUtil = new LiveDataTestUtil<>();
         MutableLiveData<List<Fundos>> returnedData = new MutableLiveData<>();
         returnedData.setValue(fundos);
         when(fundosDao.getFundos()).thenReturn(returnedData);
 
-
+        //Resposta da API
         Response response = Response.success(200, fundosNetwork);
         ApiResponse apiResponse = new ApiResponse<List<Fundos>>().create(response);
         MutableLiveData<ApiResponse<List<Fundos>>> returnedDataNetwork = new MutableLiveData<>();
+        returnedDataNetwork.setValue(apiResponse);
         when(mainApi.getFundos()).thenReturn(returnedDataNetwork);
 
+        //Busca da primeira resposta
         Resource<List<Fundos>> observedData = liveDataTestUtil.getValue(fundosRepository.getFundosSorted(null));
 
-        assertEquals(fundos, observedData.data);
+        assertNull(observedData.data);
         assertNull(observedData.message);
         assertEquals(Resource.Status.LOADING, observedData.status);
 
-        liveDataTestUtil.getValue(fundosRepository.getFundosSorted(null));
+        //populando o local com resultado do JSON
+        returnedData.setValue(fundosNetwork);
+        when(fundosDao.getFundos()).thenReturn(returnedData);
 
-        assertEquals(fundos, observedData.data);
-        assertNull(observedData.message);
+
+        observedData = liveDataTestUtil.getValue(fundosRepository.getFundosSorted(null));
+
         assertEquals(Resource.Status.SUCCESS, observedData.status);
+        assertEquals(fundosNetwork.get(0), observedData.data.get(0));
+        assertNull(observedData.message);
+
+
+        verify(fundosDao, (times(2))).getFundos();
+        verify(fundosDao).insertFundos(fundosNetwork);
+        verifyNoMoreInteractions(fundosDao);
+        verify(mainApi).getFundos();
+        verifyNoMoreInteractions(mainApi);
 
     }
 

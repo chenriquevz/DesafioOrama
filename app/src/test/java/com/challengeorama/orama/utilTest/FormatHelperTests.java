@@ -5,7 +5,7 @@ import com.challengeorama.orama.util.FormatHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FormatHelperTest {
+public class FormatHelperTests {
 
 
     @Test

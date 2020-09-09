@@ -194,5 +194,6 @@ public class Fundos {
     public void setFundManager(FundManager fundManager) {
         this.fundManager = fundManager;
     }
+
 }
 
