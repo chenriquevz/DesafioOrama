@@ -167,7 +167,6 @@ public class FundosRepositoryTests {
         returnedData.setValue(fundosNetwork);
         when(fundosDao.getFundos()).thenReturn(returnedData);
 
-
         observedData = liveDataTestUtil.getValue(fundosRepository.getFundosSorted(null));
 
         assertEquals(Resource.Status.SUCCESS, observedData.status);

@@ -32,6 +32,7 @@ public class MainViewModel extends ViewModel {
     private MediatorLiveData<Resource<List<Fundos>>> fundosMediatorLiveData = new MediatorLiveData<>();
 
     private MediatorLiveData<ListDataOptions> listDataOptionsMediatorLiveData = new MediatorLiveData<>();
+
     private MediatorLiveData<Boolean> isErrorActive = new MediatorLiveData<>();
 
 

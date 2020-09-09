@@ -25,6 +25,7 @@ android {
     }
 
     testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
         animationsDisabled = true
         unitTests {
             includeAndroidResources = true
@@ -141,5 +142,11 @@ dependencies {
     def material_dialog = "3.3.0"
     implementation "com.afollestad.material-dialogs:core:$material_dialog"
 
+    // orchestrator
+    def orchestrator_version = "1.2.0"
+    androidTestUtil "androidx.test:orchestrator:$orchestrator_version"
+
+    //Retrofit test
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.3.0"
 
 }
