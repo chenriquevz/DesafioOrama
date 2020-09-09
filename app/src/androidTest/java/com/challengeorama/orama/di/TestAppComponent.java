@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.challengeorama.orama.persistence.FundosDao;
 import com.challengeorama.orama.persistence.FundosDaoTest;
+import com.challengeorama.orama.ui.detail.DetailFragmentTests;
 import com.challengeorama.orama.ui.main.MainFragmentTests;
 
 import javax.inject.Singleton;
@@ -28,6 +29,7 @@ public interface TestAppComponent extends AppComponent {
     }
 
     void inject (MainFragmentTests mainFragmentTests);
+    void inject (DetailFragmentTests detailFragmentTests);
     void inject (FundosDaoTest fundosDaoTest);
 
 }
