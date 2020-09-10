@@ -13,6 +13,7 @@ import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.IFundosRepository;
 import com.challengeorama.orama.repository.Resource;
+import com.challengeorama.orama.util.EspressoIdlingResource;
 
 import java.util.List;
 
@@ -80,20 +81,24 @@ public class MainViewModel extends ViewModel {
 
     private void searchFundos(LiveData<Resource<List<Fundos>>> repository) {
 
+        EspressoIdlingResource espressoIdlingResource = new EspressoIdlingResource();
+        espressoIdlingResource.increment();
+
         fundosMediatorLiveData.addSource(repository, new Observer<Resource<List<Fundos>>>() {
             @Override
             public void onChanged(Resource<List<Fundos>> listResource) {
 
                 if (listResource.status == Resource.Status.SUCCESS) {
 
-                    isErrorActive.setValue(false);
                     fundosMediatorLiveData.setValue(listResource);
                     fundosMediatorLiveData.removeSource(repository);
+                    espressoIdlingResource.decrement();
 
                 } else if (listResource.status == Resource.Status.ERROR) {
 
                     fundosMediatorLiveData.setValue(listResource);
                     fundosMediatorLiveData.removeSource(repository);
+                    espressoIdlingResource.decrement();
                 }
 
                 fundosMediatorLiveData.setValue(listResource);

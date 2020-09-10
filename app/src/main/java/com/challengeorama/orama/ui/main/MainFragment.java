@@ -288,8 +288,7 @@ public class MainFragment extends Fragment {
 
     private void showErrorDialog() {
 
-        MaterialDialog dialog = new MaterialDialog(requireActivity(), MaterialDialog.getDEFAULT_BEHAVIOR())
-                .noAutoDismiss();
+        MaterialDialog dialog = new MaterialDialog(requireActivity(), MaterialDialog.getDEFAULT_BEHAVIOR());
 
         dialog.getView().contentLayout.addCustomView(R.layout.main_error, null, true, false, false);
 
@@ -300,8 +299,9 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mViewModel.forceRefresh();
                 dialog.dismiss();
+                mViewModel.forceRefresh();
+
 
             }
         });
