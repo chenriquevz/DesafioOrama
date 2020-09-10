@@ -2,7 +2,6 @@ package com.challengeorama.orama.di;
 
 import android.app.Application;
 
-import com.challengeorama.orama.persistence.FundosDao;
 import com.challengeorama.orama.persistence.FundosDaoTest;
 import com.challengeorama.orama.ui.EndtoEndNavigationTests;
 import com.challengeorama.orama.ui.detail.DetailFragmentTests;

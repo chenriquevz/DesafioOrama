@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.challengeorama.orama.databinding.MainViewholderFundosBinding;
@@ -45,15 +44,12 @@ class MainRecyclerAdapter extends RecyclerView.Adapter<FundosViewHolder> {
         @Override
         public boolean areItemsTheSame(
                 @NonNull Fundos oldUser, @NonNull Fundos newUser) {
-            // User properties may have changed if reloaded from the DB, but ID is fixed
             return oldUser.getId() == newUser.getId();
         }
 
         @Override
         public boolean areContentsTheSame(
                 @NonNull Fundos oldUser, @NonNull Fundos newUser) {
-            // NOTE: if you use equals, your object must properly override Object#equals()
-            // Incorrectly returning false here will result in too many animations.
             return oldUser.equals(newUser);
         }
     };

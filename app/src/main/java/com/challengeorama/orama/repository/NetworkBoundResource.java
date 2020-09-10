@@ -1,7 +1,5 @@
 package com.challengeorama.orama.repository;
 
-import android.util.Log;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +38,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                 results.removeSource(dbSource);
 
                 if(shouldFetch(cacheObject)){
-                    // get data from the network
                     fetchFromNetwork(dbSource);
                 }
                 else{
@@ -81,7 +78,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         @Override
                         public void run() {
 
-                            // save the response to the local db
                             try {
                                 saveCallResult((RequestObject) processResponse((ApiResponse.ApiSuccessResponse)requestObjectApiResponse));
                             } catch (Exception e) {
@@ -160,6 +156,6 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     public final LiveData<Resource<CacheObject>> getAsLiveData(){
         return results;
-    };
+    }
 }
 

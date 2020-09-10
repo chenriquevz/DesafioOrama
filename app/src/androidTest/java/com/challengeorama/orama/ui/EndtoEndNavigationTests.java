@@ -1,7 +1,5 @@
 package com.challengeorama.orama.ui;
 
-import android.app.Activity;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -12,7 +10,6 @@ import com.challengeorama.orama.TestBaseApplication;
 import com.challengeorama.orama.di.TestAppComponent;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.util.EspressoIdlingResourceRule;
-import com.challengeorama.orama.util.FormatHelper;
 import com.challengeorama.orama.util.JsonUITest;
 import com.challengeorama.orama.util.RecyclerViewItemCountAssertion;
 import com.challengeorama.orama.util.RecyclerViewMatcher;

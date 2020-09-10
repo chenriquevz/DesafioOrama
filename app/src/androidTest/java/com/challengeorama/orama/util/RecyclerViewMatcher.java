@@ -4,16 +4,10 @@ import android.content.res.Resources;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.assertion.ViewAssertions;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public class RecyclerViewMatcher {
 

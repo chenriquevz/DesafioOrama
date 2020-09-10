@@ -1,13 +1,9 @@
 package com.challengeorama.orama.repository;
 
-import android.app.Application;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.util.JsonUITest;
-import com.challengeorama.orama.util.TestConstants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,9 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import static com.challengeorama.orama.util.TestConstants.*;
-import static com.challengeorama.orama.util.TestConstants.LOADING;
-import static com.challengeorama.orama.util.TestConstants.NETWORK_ERROR;
-import static com.challengeorama.orama.util.TestConstants.NETWORK_ERROR_CACHELESS;
 
 @Singleton
 public class FakeDataSource {

@@ -12,10 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.orchestrator.junit.BundleJUnitUtils;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.challengeorama.orama.R;
@@ -24,14 +21,11 @@ import com.challengeorama.orama.di.TestAppComponent;
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.repository.FakeDataSource;
 import com.challengeorama.orama.ui.BaseFragmentTest;
-import com.challengeorama.orama.ui.main.MainFragment;
-import com.challengeorama.orama.ui.main.MainFragmentDirections;
 import com.challengeorama.orama.util.FormatHelper;
 import com.challengeorama.orama.util.JsonUITest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.hamcrest.core.IsNot;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -206,7 +200,7 @@ public class DetailFragmentTests extends BaseFragmentTest {
     }
 
     @Test
-    public void DetailFragment_swipe() {
+    public void detailFragment_swipe() {
 
         int fundoId = 15;
 

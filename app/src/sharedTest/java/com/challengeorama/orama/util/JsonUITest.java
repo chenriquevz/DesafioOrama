@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.inject.Inject;
 
@@ -28,7 +29,7 @@ public class JsonUITest {
         try {
             InputStream input = ((AssetManager) app.getAssets()).open(filename);
             BufferedSource source = Okio.buffer(Okio.source(input));
-            return source.readByteString().string(Charset.forName("utf-8"));
+            return source.readByteString().string(StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }

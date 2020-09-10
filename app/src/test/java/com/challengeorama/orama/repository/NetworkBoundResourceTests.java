@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -33,7 +31,7 @@ public class NetworkBoundResourceTests {
         LiveData<Resource<String>> inTest = new NetworkBoundResource<String, String>(AppExecutors.getInstance()) {
 
             @Override
-            protected void saveCallResult(@NonNull String item) throws Exception {
+            protected void saveCallResult(@NonNull String item) {
 
             }
 
@@ -79,7 +77,7 @@ public class NetworkBoundResourceTests {
         LiveData<Resource<String>> inTest = new NetworkBoundResource<String, String>(AppExecutors.getInstance()) {
 
             @Override
-            protected void saveCallResult(@NonNull String item) throws Exception {
+            protected void saveCallResult(@NonNull String item) {
 
             }
 

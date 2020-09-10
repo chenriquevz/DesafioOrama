@@ -2,7 +2,6 @@ package com.challengeorama.orama.api;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.challengeorama.orama.model.fundos.Fundos;
 import com.challengeorama.orama.util.JsonUnitTest;

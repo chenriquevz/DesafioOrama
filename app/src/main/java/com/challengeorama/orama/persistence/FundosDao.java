@@ -11,7 +11,7 @@ import java.util.List;
 public interface FundosDao {
 
     @Insert
-    void insertFundos(List<Fundos> fundos) throws Exception;
+    void insertFundos(List<Fundos> fundos);
 
     @Query("SELECT * FROM Fundos" )
     LiveData<List<Fundos>> getFundos();

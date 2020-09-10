@@ -1,27 +1,18 @@
 package com.challengeorama.orama.repository;
 
-import android.app.Application;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.challengeorama.orama.api.MainApi;
 import com.challengeorama.orama.model.ListDataOptions;
 import com.challengeorama.orama.model.Sort;
 import com.challengeorama.orama.model.fundos.Fundos;
-import com.challengeorama.orama.persistence.FundosDao;
-import com.challengeorama.orama.util.JsonUITest;
-import com.challengeorama.orama.util.TestConstants;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 public class FakeFundosRepository implements IFundosRepository {
 

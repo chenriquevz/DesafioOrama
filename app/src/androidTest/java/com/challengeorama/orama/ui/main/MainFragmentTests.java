@@ -1,7 +1,5 @@
 package com.challengeorama.orama.ui.main;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.fragment.app.Fragment;
@@ -26,7 +24,6 @@ import com.challengeorama.orama.util.FormatHelper;
 import com.challengeorama.orama.util.JsonUITest;
 import com.challengeorama.orama.util.RecyclerViewItemCountAssertion;
 import com.challengeorama.orama.util.RecyclerViewMatcher;
-import com.challengeorama.orama.viewmodels.ViewModelProviderFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,9 +48,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static com.challengeorama.orama.util.TestConstants.EMPTYJSON;
 import static com.challengeorama.orama.util.TestConstants.FUNDOSJSON;
-import static com.challengeorama.orama.util.TestConstants.LOADING;
 import static com.challengeorama.orama.util.TestConstants.NETWORK_ERROR_CACHELESS;
-import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class MainFragmentTests extends BaseFragmentTest {
@@ -86,7 +81,7 @@ public class MainFragmentTests extends BaseFragmentTest {
     }
 
     @Test
-    public void mainFragment_checktitle_basicSwipes() throws InterruptedException {
+    public void mainFragment_checktitle_basicSwipes() {
 
         launchFragment();
 
@@ -99,7 +94,7 @@ public class MainFragmentTests extends BaseFragmentTest {
     }
 
     @Test
-    public void mainFragment_navigation() throws InterruptedException {
+    public void mainFragment_navigation() {
 
         launchFragment();
 
@@ -114,7 +109,7 @@ public class MainFragmentTests extends BaseFragmentTest {
     }
 
     @Test
-    public void mainFragment_recyclerview_count_and_checkdata() throws InterruptedException {
+    public void mainFragment_recyclerview_count_and_checkdata() {
 
         launchFragment();
 
@@ -162,7 +157,7 @@ public class MainFragmentTests extends BaseFragmentTest {
     }
 
     @Test
-    public void mainFragment_errorHandling() throws InterruptedException {
+    public void mainFragment_errorHandling() {
 
         fakeDataSource.daoReturn = EMPTYJSON;
         fakeDataSource.apiReturn = NETWORK_ERROR_CACHELESS;

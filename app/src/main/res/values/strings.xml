@@ -34,5 +34,9 @@
     <string name="main_filter_clear">Limpar filtro</string>
     <string name="main_filter_cancel">Cancelar</string>
     <string name="main_filter_apply">Aplicar</string>
+    <string name="main_filter_menu_name">Filtro</string>
+    <string name="detail_fragment_fundmanager_title">Gestor do Fundo</string>
+    <string name="detail_fragment_objective_title">Objetivos do fundo</string>
+    <string name="detail_fragment_profitability_title">Histórico de rentabilidade</string>
 
 </resources>
