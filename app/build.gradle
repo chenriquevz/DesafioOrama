@@ -68,7 +68,7 @@ dependencies {
 
     //Fragment scenario testing -- necesário porque a versão 1.2.5 não está rodando com java.
     def fragment_version_debug = "1.3.0-alpha08"
-    debugImplementation "androidx.fragment:fragment-testing:$fragment_version_debug"
+    //debugImplementation "androidx.fragment:fragment-testing:$fragment_version_debug"
 
     //main libraries
     implementation 'androidx.appcompat:appcompat:1.2.0'
